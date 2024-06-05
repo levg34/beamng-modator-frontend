@@ -1,4 +1,4 @@
-import { Match, Switch, createResource, type Component } from 'solid-js'
+import { For, Match, Switch, createResource, type Component } from 'solid-js'
 import { Button, Spinner } from 'solid-bootstrap'
 import { getUrl } from './utils/fetch'
 import ConfigDropdown from './components/ConfigDropdown'
@@ -21,15 +21,17 @@ const App: Component = () => {
     return (
         <div>
             <Switch
-                fallback={vehicleConfigs().vehicles.map(
-                    (vc: { vehicle: string; configs: { configName: string; newConfig: string | null }[] }) => (
-                        <ConfigDropdown
-                            vehicleConfig={vc}
-                            updateConfig={updateConfig}
-                            predefinedConfig={predefinedConfig()}
-                        />
-                    )
-                )}
+                fallback={
+                    <For each={vehicleConfigs().vehicles}>
+                        {(vc: { vehicle: string; configs: { configName: string; newConfig: string | null }[] }) => (
+                            <ConfigDropdown
+                                vehicleConfig={vc}
+                                updateConfig={updateConfig}
+                                predefinedConfig={predefinedConfig()}
+                            />
+                        )}
+                    </For>
+                }
             >
                 <Match when={vehicleConfigs.loading || predefinedConfig.loading}>
                     <Spinner animation="border" role="status">

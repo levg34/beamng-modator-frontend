@@ -22,17 +22,19 @@ const ConfigDropdown = (props: Props) => {
 
     return (
         <div>
-            {props.vehicleConfig.configs.map((config) => (
-                <InputGroup class="mb-3">
-                    <InputGroup.Text>{config.configName}</InputGroup.Text>
-                    <Form.Select value={config.newConfig || undefined}>
-                        <option>No change</option>
-                        <For each={Object.keys(props.predefinedConfig ?? {})}>
-                            {(c) => <option value={c}>{c}</option>}
-                        </For>
-                    </Form.Select>
-                </InputGroup>
-            ))}
+            <For each={props.vehicleConfig.configs}>
+                {(config) => (
+                    <InputGroup class="mb-3">
+                        <InputGroup.Text>{config.configName}</InputGroup.Text>
+                        <Form.Select value={config.newConfig || undefined}>
+                            <option>No change</option>
+                            <For each={Object.keys(props.predefinedConfig ?? {})}>
+                                {(c) => <option value={c}>{c}</option>}
+                            </For>
+                        </Form.Select>
+                    </InputGroup>
+                )}
+            </For>
         </div>
     )
 }
