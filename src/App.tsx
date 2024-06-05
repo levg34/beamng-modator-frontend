@@ -1,5 +1,5 @@
 import { For, Match, Switch, createResource, type Component } from 'solid-js'
-import { Button, Spinner } from 'solid-bootstrap'
+import { Button, Form, Spinner } from 'solid-bootstrap'
 import { getUrl } from './utils/fetch'
 import ConfigDropdown from './components/ConfigDropdown'
 
@@ -24,11 +24,14 @@ const App: Component = () => {
                 fallback={
                     <For each={vehicleConfigs().vehicles}>
                         {(vc: { vehicle: string; configs: { configName: string; newConfig: string | null }[] }) => (
-                            <ConfigDropdown
-                                vehicleConfig={vc}
-                                updateConfig={updateConfig}
-                                predefinedConfig={predefinedConfig()}
-                            />
+                            <Form.Group>
+                                <Form.Label>{vc.vehicle}</Form.Label>
+                                <ConfigDropdown
+                                    vehicleConfig={vc}
+                                    updateConfig={updateConfig}
+                                    predefinedConfig={predefinedConfig()}
+                                />
+                            </Form.Group>
                         )}
                     </For>
                 }
