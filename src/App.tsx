@@ -10,7 +10,7 @@ const App: Component = () => {
         )
     )
 
-    const [prefedinedConfigs] = createResource(() =>
+    const [predefinedConfig] = createResource(() =>
         getUrl('https://raw.githubusercontent.com/levg34/beamng-modator/main/config/config.json')
     )
 
@@ -26,17 +26,17 @@ const App: Component = () => {
                         <ConfigDropdown
                             vehicleConfig={vc}
                             updateConfig={updateConfig}
-                            prefedinedConfigs={prefedinedConfigs()}
+                            predefinedConfig={predefinedConfig()}
                         />
                     )
                 )}
             >
-                <Match when={vehicleConfigs.loading}>
+                <Match when={vehicleConfigs.loading || predefinedConfig.loading}>
                     <Spinner animation="border" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </Spinner>
                 </Match>
-                <Match when={vehicleConfigs.error}>Error</Match>
+                <Match when={vehicleConfigs.error || predefinedConfig.error}>Error</Match>
             </Switch>
 
             <Button>Nope</Button>
